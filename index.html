@@ -23,7 +23,7 @@
 
 <header id="home">
     <video autoplay muted loop playsinline id="bg-video">
-        <source src="video1.mp4" type="video/mp4">
+        <source src="video3.mp4" type="video/mp4">
     </video>
     <div class="video-overlay"></div>
 
@@ -131,25 +131,29 @@
 
     <div class="contact-container">
         <div class="contact-form-side">
-            <form action="#">
-                <div class="form-group">
-                    <label>Full Name</label>
-                    <input type="text" placeholder="Enter your full name">
-                </div>
-                <div class="form-group">
-                    <label>Email Address</label>
-                    <input type="email" placeholder="Enter your email address">
-                </div>
-                <div class="form-group">
-                    <label>Subject</label>
-                    <input type="text" placeholder="What is this about?">
-                </div>
-                <div class="form-group">
-                    <label>Message</label>
-                    <textarea rows="5" placeholder="Write your message here..."></textarea>
-                </div>
-                <button type="submit" class="btn-send">Send Message</button>
-            </form>
+    <form id="contactForm">
+
+
+    <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" name="name" placeholder="Enter your full name" required>
+    </div>
+    <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" name="email" placeholder="Enter your email address" required>
+    </div>
+    <div class="form-group">
+        <label>Subject</label>
+        <input type="text" name="subject" placeholder="What is this about?" required>
+    </div>
+    <div class="form-group">
+        <label>Message</label>
+        <textarea name="message" rows="5" placeholder="Write your message here..." required></textarea>
+    </div>
+    
+
+    <button type="submit" class="btn-send">Send Message</button>
+</form>
         </div>
 
         <div class="contact-info-side">
@@ -183,34 +187,70 @@
     </footer>
 
     <script>
-        // High-Performance Intersection Observer
-        const observerOptions = {
-            threshold: 0.15,
-            rootMargin: '0px 0px -50px 0px'
-        };
+/* ===============================
+   Scroll Reveal Animation
+================================ */
+const observerOptions = {
+    threshold: 0.15,
+    rootMargin: '0px 0px -50px 0px'
+};
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                }
-            });
-        }, observerOptions);
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+        }
+    });
+}, observerOptions);
 
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-        function confirmDownload(event, fileName) {
-    // This creates the browser popup
-    const pizza = confirm("Are you sure you want to download " + fileName + "? \n\nNote: Please ensure you trust the source before running .exe files.");
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+/* ===============================
+   EXE Download Confirmation
+================================ */
+function confirmDownload(event, fileName) {
+    const confirmBox = confirm(
+        "Are you sure you want to download " + fileName +
+        "?\n\nNote: Please ensure you trust the source before running .exe files."
+    );
     
-    // If user clicks "Cancel", stop the download
-    if (!pizza) {
+
+    if (!confirmBox) {
         event.preventDefault();
         return false;
     }
-    // If user clicks "OK", the download continues
     return true;
 }
-    </script>
+
+/* ===============================
+   Contact Form → Nodemailer
+================================ */
+document.getElementById("contactForm").addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const data = {
+        name: this.name.value,
+        email: this.email.value,
+        subject: this.subject.value,
+        message: this.message.value
+    };
+
+    try {
+        const response = await fetch("http://localhost:3000/send-mail", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+        alert(result.message);
+        this.reset();
+    } catch (error) {
+        alert("Server error. Please try again later.");
+        console.error(error);
+    }
+});
+</script>
 
 </body>
 </html>
