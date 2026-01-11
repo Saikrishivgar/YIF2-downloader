@@ -2,7 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="
+  width=device-width,
+  initial-scale=1.0,
+  maximum-scale=1.0,
+  minimum-scale=1.0,
+  user-scalable=no,
+  viewport-fit=cover
+">
     <title>Asthra Tech | One Click Automation</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="index.css">
@@ -179,17 +186,42 @@
         <p style="color: var(--text-muted); font-size: 0.8rem; letter-spacing: 3px;">© 2026 ASTHRA TECH PVT LTD. ALL RIGHTS RESERVED.</p>
     </footer>
 </section>
-    <footer id="contact" class="reveal">
-        <h2 class="section-title">Initiate Contact</h2>
-        <p style="color: var(--text-muted); margin-bottom: 50px; font-size: 1.2rem;">Ready to elevate your tech stack to the premium tier?</p>
-        <a href="mailto:contact@ashtratech.com" class="btn-premium">Partner With Us</a>
-        <p style="margin-top: 100px; color: var(--text-muted); font-size: 0.8rem; letter-spacing: 3px;">© 2026 ASTHRA TECH PVT LTD. ALL RIGHTS RESERVED.</p>
-    </footer>
+   
 
-    <script>
-/* ===============================
-   Scroll Reveal Animation
-================================ */
+ <script>
+document.getElementById("contactForm").addEventListener("submit", async function (e) {
+  e.preventDefault();
+
+  const data = {
+    name: this.name.value,
+    email: this.email.value,
+    subject: this.subject.value,
+    message: this.message.value
+  };
+
+  try {
+    await fetch(
+      "https://script.google.com/macros/s/AKfycbyaXYASSr6d7w4-E6tArGgxqR-qM-S5u52OvtCsXqEhefAIH2aa4QI8wyo8PXoNAFr8/exec",
+      {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      }
+    );
+
+    alert("Message submitted successfully ✅");
+    this.reset();
+
+  } catch (err) {
+    alert("Submission failed ❌");
+    console.error(err);
+  }
+});
+</script>
+<script>
 const observerOptions = {
     threshold: 0.15,
     rootMargin: '0px 0px -50px 0px'
@@ -204,52 +236,6 @@ const observer = new IntersectionObserver((entries) => {
 }, observerOptions);
 
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-/* ===============================
-   EXE Download Confirmation
-================================ */
-function confirmDownload(event, fileName) {
-    const confirmBox = confirm(
-        "Are you sure you want to download " + fileName +
-        "?\n\nNote: Please ensure you trust the source before running .exe files."
-    );
-    
-
-    if (!confirmBox) {
-        event.preventDefault();
-        return false;
-    }
-    return true;
-}
-
-/* ===============================
-   Contact Form → Nodemailer
-================================ */
-document.getElementById("contactForm").addEventListener("submit", async function (e) {
-    e.preventDefault();
-
-    const data = {
-        name: this.name.value,
-        email: this.email.value,
-        subject: this.subject.value,
-        message: this.message.value
-    };
-
-    try {
-        const response = await fetch("http://localhost:3000/send-mail", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data)
-        });
-
-        const result = await response.json();
-        alert(result.message);
-        this.reset();
-    } catch (error) {
-        alert("Server error. Please try again later.");
-        console.error(error);
-    }
-});
 </script>
 
 </body>

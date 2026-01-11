@@ -461,3 +461,117 @@
         border-color: var(--accent-primary);
         box-shadow: 0 0 25px var(--accent-glow);
     }
+
+    /* =====================================
+   MOBILE POLISH – KEEP PREMIUM LOOK
+   ===================================== */
+@media (max-width: 768px) {
+
+  /* NAVBAR */
+  nav {
+    padding: 18px 20px;
+    justify-content: center;
+  }
+
+  .logo {
+    font-size: 1.4rem;
+  }
+
+  /* HERO */
+  header {
+    height: 90vh;
+    padding-top: 80px; /* fix fixed-nav overlap */
+  }
+
+  header h1 {
+    font-size: 2.6rem;
+    letter-spacing: -2px;
+  }
+
+  .quest {
+    font-size: 0.9rem;
+    letter-spacing: 4px;
+    margin-bottom: 35px;
+  }
+
+  /* VISION + MISSION */
+  .grid-section {
+    padding: 80px 20px;
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+
+  .card {
+    padding: 35px 25px;
+    border-radius: 26px;
+    text-align: center;
+  }
+
+  .card h3 {
+    font-size: 1.6rem;
+  }
+
+  /* PRODUCTS */
+  .products {
+    padding: 90px 20px;
+  }
+
+  .section-title {
+    font-size: 2.4rem;
+    margin-bottom: 60px;
+  }
+
+  .product-item {
+    padding: 35px 25px;
+  }
+
+  /* TEAM */
+  .members {
+    padding: 90px 20px;
+  }
+
+  .founder-grid {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+
+  .founder-card {
+    padding: 35px 20px;
+  }
+
+  /* CONTACT */
+  #contact {
+    padding: 90px 20px !important;
+  }
+
+  .contact-container {
+    border-radius: 22px;
+  }
+
+  .contact-form-side,
+  .contact-info-side {
+    padding: 35px 25px;
+  }
+
+  .contact-info-side {
+    text-align: center;
+  }
+
+  /* BUTTONS */
+  .btn-premium {
+    padding: 16px 35px;
+    font-size: 0.95rem;
+  }
+
+  .btn-send {
+    font-size: 1rem;
+    padding: 16px;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 80px 20px 40px;
+  }
+}
+
+
